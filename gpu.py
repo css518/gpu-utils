@@ -129,12 +129,16 @@ def show_gpu_usage():
 
 if __name__ == '__main__':
     while True:
-        with open('/notedata/gpus.html', 'w') as f:
+        bak_file = '/notedata/gpus.html.bak'
+        file = '/notedata/gpus.html'
+        with open(bak_file, 'w') as f:
             print_html_header()
             show_nvidia_smi()
             show_gpu_usage()
             print_html_memory_usage()
             print_html_footer()
+        with open(bak_file, 'r') as fa, open(file, 'w') as fb:
+            fb.write(fa.read())
         print('sleep')
         # 每5分钟跑一次
         time.sleep(60 * 5)
